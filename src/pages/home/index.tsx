@@ -3,7 +3,6 @@ import api from '../../services/api';
 import { differenceInDays, endOfHour } from 'date-fns'
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
-import * as Yup from 'yup';
 import { Finance } from 'financejs'
 
 import Container from 'react-bootstrap/Container';
@@ -17,7 +16,7 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 import FormControl from 'react-bootstrap/FormControl';
 
-import getValidationErrors from '../../utils/getValidationErrors';
+import mixChartData from '../../utils/mixChartData';
 import dateRange from '../../utils/dateRange';
 import { useToast } from '../../hooks/toast';
 
@@ -54,23 +53,23 @@ const Home: React.FC = () => {
   const [investDate, setInvestDate] = useState(new Date());
   const [investValue, setInvestValue] = useState(0);
   const [currency, setCurrency] = useState('R$');
-  const [rawChartData, setRawChartData] = useState<State>(() => {
-    const interData: State = { data: [['X', 'Y'],['0', 0],]};
-    return interData;
-  });
+  // const [rawChartData, setRawChartData] = useState<State>(() => {
+  //   const interData: State = { data: [['X', 'Y'], ['0', 0],] };
+  //   return interData;
+  // });
 
-  const [criptoChartData, setCriptoChartData] = useState<State>(() => {
-    const interData: State = { data: [['X', 'Y'],['0', 0],]};
+  const [cryptoChartData, setCryptoChartData] = useState<State>(() => {
+    const interData: State = { data: [['X', 'Y'], ['0', 0],] };
     return interData;
   });
 
   const [tesouroChartData, setTesouroChartData] = useState<State>(() => {
-    const interData: State = { data: [['X', 'Y'],['0', 0],]};
+    const interData: State = { data: [['X', 'Y'], ['0', 0],] };
     return interData;
   });
 
   const [formattedChartData, setFormattedChartData] = useState<State>(() => {
-    const interData: State = { data: [['X', 'Y'],['0', 0],]};
+    const interData: State = { data: [['X', 'Y'], ['0', 0],] };
     return interData;
   });
 
@@ -84,6 +83,9 @@ const Home: React.FC = () => {
       try {
         formRef.current?.setErrors({});
 
+        let formattedTreasureData: State = { data: [['0', 0]] };
+        let formattedCryptoData: State = { data: [['0', 0]] };
+
         if (investType.includes(2)) {
 
           const datesTreasure = dateRange(investDate, new Date());
@@ -91,7 +93,7 @@ const Home: React.FC = () => {
           const initialInvest = investValue;
 
           const chartDataTreasure: Array<Array<string | Date | number>> = datesTreasure.map((data, index) => {
-            const investValue = finance.CI(0.166,index + 1,initialInvest,index + 1);
+            const investValue = finance.CI(0.166, index + 1, initialInvest, index + 1);
 
             const chartData_ =
               [
@@ -105,10 +107,10 @@ const Home: React.FC = () => {
 
           const axes = ['data', 'Tesouro direto'];
 
-          const formattedTreasureData = { data: [axes,...chartDataTreasure] };
+          formattedTreasureData = { data: [axes, ...chartDataTreasure] };
 
           setTesouroChartData(formattedTreasureData);
-
+          setFormattedChartData(formattedTreasureData);
         }
 
         if (investType.includes(1)) {
@@ -146,12 +148,12 @@ const Home: React.FC = () => {
 
           const formattedChartData = { data: [...chartData] };
 
-          setRawChartData(formattedChartData);
+          // setRawChartData(formattedChartData);
 
-          // Calculate criptocoin investiment
+          // Calculate cryptocoin investiment
           const baseValue = investValue / Number(formattedChartData.data[0][1]);
 
-          const criptoData = formattedChartData.data.map((data) => {
+          const cryptoData = formattedChartData.data.map((data) => {
             const value = baseValue * Number(data[1]);
             const chartData_ =
               [
@@ -160,26 +162,40 @@ const Home: React.FC = () => {
               ]
               ;
 
-              return chartData_;
+            return chartData_;
           });
 
           const axes = ['data', 'bitcoin'];
 
-          const formattedCriptoData = { data: [axes,...criptoData] };
+          formattedCryptoData = { data: [axes, ...cryptoData] };
 
-          setCriptoChartData(formattedCriptoData);
+          setCryptoChartData(formattedCryptoData);
+          setFormattedChartData(formattedCryptoData);
         }
 
+        if(investType.includes(1) && investType.includes(2)){
+
+          const formattedData = formattedTreasureData.data.map((data, index) => {
+            if (formattedCryptoData.data[index]) {
+              const cell = data;
+              cell.push(formattedCryptoData.data[index][1]);
+              return cell;
+            } else {
+              const cell = data;
+              cell.push(formattedCryptoData.data[index-1][1]);
+              return cell;
+            }
+          }
+          );
+
+          const response = { data: [...formattedData] };
+          console.log(response);
+
+
+          setFormattedChartData(response);
+        }
 
       } catch (err) {
-        if (err instanceof Yup.ValidationError) {
-          const errors = getValidationErrors(err);
-
-          formRef.current?.setErrors(errors);
-          console.log("erro");
-          return;
-        }
-
         addToast({
           type: 'error',
           title: 'Erro no servidor',
@@ -188,7 +204,7 @@ const Home: React.FC = () => {
         });
       }
     },
-    [investDate, investValue, investType]);
+    [investDate, investValue, investType, setTesouroChartData, setCryptoChartData, setFormattedChartData, formattedChartData, tesouroChartData, cryptoChartData]);
 
 
   const handleFsym = useCallback((fsymValue: string) => {
@@ -240,8 +256,8 @@ const Home: React.FC = () => {
                 title={currency}
                 id="input-group-dropdown-1"
               >
-                <Dropdown.Item onClick={()=>{setCurrency('R$')}}>R$</Dropdown.Item>
-                <Dropdown.Item onClick={()=>{setCurrency('US$')}}>US$</Dropdown.Item>
+                <Dropdown.Item onClick={() => { setCurrency('R$') }}>R$</Dropdown.Item>
+                <Dropdown.Item onClick={() => { setCurrency('US$') }}>US$</Dropdown.Item>
 
               </DropdownButton>
 
@@ -264,8 +280,8 @@ const Home: React.FC = () => {
           </Form>
         </Col>
 
-        <Col>
-          <Charts data={tesouroChartData.data} />
+        <Col md="8">
+          <Charts data={formattedChartData.data} />
         </Col>
       </Row>
 
