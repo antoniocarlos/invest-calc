@@ -1,0 +1,32 @@
+.container-fluid {
+  padding: 0px;
+  margin: 0px;
+}
+
+.row {
+  margin: 0;
+}
+
+.invest {
+  background: rgb(245, 245, 245);
+  padding: 36px;
+}
+
+.invest h2 {
+  margin-bottom: 36px;
+}
+
+.invest-data-row {
+  background: rgb(248, 248, 248);
+}
+
+.invest-data-inputs {
+  max-width: 380px;
+  margin: 36px auto;
+}
+
+.custom-invest-data-inputs {
+  width: 380px;
+  margin: 36px auto;
+}
+
