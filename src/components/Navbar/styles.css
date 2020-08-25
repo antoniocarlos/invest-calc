@@ -1,0 +1,12 @@
+.navbar {
+  background: rgb(43, 43, 43);
+  padding: 36px;
+}
+
+.navbar-brand {
+  color: rgb(197, 197, 197) !important;
+}
+
+.nav-link {
+  color: rgb(197, 197, 197) !important;
+}
