@@ -203,7 +203,7 @@ const Home: React.FC = () => {
         });
       }
     },
-    [investDate, investValue, investType, setFormattedChartData, addToast, finance]);
+    [investDate, investValue, investType, setFormattedChartData, addToast, finance, dateChanged]);
 
   const handleUpdateDate = useCallback((day: Date) => {
 
