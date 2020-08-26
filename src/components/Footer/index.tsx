@@ -7,7 +7,7 @@ import logoGitHub from '../../assets/logo-github.svg';
 const ComponenteFooter: React.FC = () => (
   <>
     <Navbar className="footer-custom">
-    <Navbar.Brand href="https://github.com/antoniocarlos/invest-calc">
+    <Navbar.Brand href="https://github.com/antoniocarlos/invest-calc/tree/data-mix">
       <img
         src={logoGitHub}
         width="70"
