@@ -4,7 +4,7 @@ Acesse o aplicativo [Invest Calc](https://invest-calc.netlify.app/).
 
 ## INVEST CALC
 
-Seja bem vindo ao invest calc, uma calculadora de investimentos direto ao ponto;
+Seja bem vindo ao invest calc, uma calculadora de investimentos direto ao ponto.
 
 ### USABILIDADE
 
