@@ -5,6 +5,16 @@
 
 .row {
   margin: 0;
+  min-height: 100vh;
+}
+
+.form-content{
+  background: #fafafa;
+  padding: 18px;
+  height: 100%;
+  border-radius: 5px;
+  border: 1px solid rgb(212, 212, 212);
+  box-shadow: 0px 2px 6px -2px rgba(0, 0, 0, 0.4);
 }
 
 .invest {
@@ -20,13 +30,48 @@
   background: rgb(248, 248, 248);
 }
 
-.invest-data-inputs {
-  max-width: 380px;
-  margin: 36px auto;
+.btn-group-toggle {
+  margin-bottom: 32px;
 }
 
-.custom-invest-data-inputs {
-  width: 380px;
-  margin: 36px auto;
+.form-title {
+  margin-bottom: 32px;
 }
 
+.DayPickerInput {
+  width: 100%;
+}
+
+.input-group {
+  position: relative;
+  display: flex;
+  flex-wrap: unset;
+  align-items: stretch;
+  width: 100%;
+}
+
+.input-group {
+  position: relative;
+  display: flex;
+  flex-wrap: unset;
+  align-items: stretch;
+  width: 100%;
+}
+
+.chart-container {
+  display: flex;
+  overflow: initial;
+  width: 100%;
+  height: 100%;
+  padding: 18px;
+  background: #fff;
+  border-radius: 5px;
+  border: 1px solid rgb(212, 212, 212);
+  box-shadow: 0px 2px 6px -2px rgba(0, 0, 0, 0.4);
+}
+
+.btn-primary:not(:disabled):not(.disabled):active:focus,
+.btn-primary:focus, .btn-primary.focus
+{
+    box-shadow:none;
+}

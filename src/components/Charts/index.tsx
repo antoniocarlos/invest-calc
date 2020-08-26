@@ -1,32 +1,26 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Chart } from "react-google-charts";
 
 import './styles.css';
 
-//test
-
 interface State {
   data: Array<Array<string | Date | number>>;
-
 }
 
 const Charts: React.FC<State> = ({ data }) => {
 
   return (
-    <div style={{ display: 'flex', maxWidth: 900 }}>
+    <div style={{ width: '100%', height:'100%' }}>
     <Chart
-      width={800}
-      height={'300px'}
-      chartType="AreaChart"
+      width={'100%'}
+      height={'100%'}
+      chartType="LineChart"
       loader={<div>Carregando dados</div>}
       data={data}
       options={{
-        title: 'Company Performance',
-        hAxis: { title: 'Year', titleTextStyle: { color: '#333' } },
-        vAxis: { minValue: 0 },
-        // For the legend to fit, we make the chart area smaller
-        chartArea: { width: '50%', height: '70%' },
-        // lineWidth: 25
+        hAxis: { },
+        vAxis: { },
+        colors: ['#fcba03', '#0324fc']
       }}
     />
   </div>
