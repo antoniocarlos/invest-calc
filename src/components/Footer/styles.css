@@ -1,0 +1,12 @@
+.footer-custom .navbar {
+  background: rgb(43, 43, 43);
+  padding: 12px !important;
+}
+
+.navbar-brand img {
+  fill: rgb(255, 255, 255) !important;
+}
+
+.nav-link {
+  color: rgb(197, 197, 197) !important;
+}

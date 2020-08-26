@@ -4,7 +4,8 @@
 }
 
 .navbar-brand {
-  color: rgb(197, 197, 197) !important;
+  color: rgb(255, 255, 255) !important;
+  font-size: 32px;
 }
 
 .nav-link {

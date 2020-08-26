@@ -8,10 +8,8 @@ import './styles.css';
 const ComponenteNavbar: React.FC = () => (
   <>
     <Navbar>
-      <Navbar.Brand href="#home">Invest Calc</Navbar.Brand>
+      <Navbar.Brand>Invest Calc</Navbar.Brand>
       <Nav className="mr-auto">
-        <Nav.Link href="#home">Home</Nav.Link>
-        <Nav.Link href="#aboultus">About us</Nav.Link>
       </Nav>
     </Navbar>
   </>
