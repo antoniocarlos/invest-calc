@@ -1,6 +1,6 @@
 import React, { useRef, useState, useCallback } from 'react';
 import api from '../../services/api';
-import { differenceInDays, endOfHour } from 'date-fns'
+import { differenceInDays, endOfDay, isBefore } from 'date-fns'
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import { Finance } from 'financejs'
@@ -51,6 +51,7 @@ const Home: React.FC = () => {
 
   const [investType, setInvestType] = useState([0]);
   const [investDate, setInvestDate] = useState(new Date());
+  const [dateChanged, setDateChanged] = useState(false);
   const [investValue, setInvestValue] = useState(0);
 
   const [formattedChartData, setFormattedChartData] = useState<State>(() => {
@@ -66,13 +67,13 @@ const Home: React.FC = () => {
 
         let flag = true;
 
-        if (investDate.getDate() === new Date().getDate()) {
+        if (!dateChanged) {
           flag = false;
           addToast({
             type: 'error',
             title: 'Erro de preenchimento do formulário',
             description:
-              'Escolha uma data para a simulação',
+              'Escolha uma data passada para a simulação',
           });
         }
 
@@ -121,7 +122,7 @@ const Home: React.FC = () => {
             let limit = 0;
             let aggregate = 1;
 
-            const investDays = differenceInDays(endOfHour(new Date()), endOfHour(investDate));
+            const investDays = differenceInDays(endOfDay(new Date()), endOfDay(investDate));
 
             limit = investDays;
 
@@ -205,7 +206,14 @@ const Home: React.FC = () => {
     [investDate, investValue, investType, setFormattedChartData, addToast, finance]);
 
   const handleUpdateDate = useCallback((day: Date) => {
-    setInvestDate(day);
+
+    if (isBefore(day, new Date())) {
+      setDateChanged(true);
+      setInvestDate(day);
+    } else {
+      setDateChanged(false);
+    }
+
   }, []);
 
   const handleUpdateInvestValue = useCallback((value: number) => {
@@ -252,7 +260,10 @@ const Home: React.FC = () => {
                   <div className="input-group-prepend">
                     <span className="input-group-text">Data: </span>
                   </div>
-                  <DayPickerInput inputProps={{ className: 'input-group form-control' }} onDayChange={day => handleUpdateDate(day)} />
+                  <DayPickerInput
+                    inputProps={{ className: 'input-group form-control' }}
+                    onDayChange={day => handleUpdateDate(day)}
+                  />
                 </div>
               </OverlayTrigger>
 
