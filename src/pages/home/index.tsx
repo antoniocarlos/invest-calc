@@ -298,7 +298,6 @@ const Home: React.FC = () => {
             </Button>
             </Form>
           </div>
-
         </Col>
 
         <Col md="8">
