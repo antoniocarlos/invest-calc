@@ -10,7 +10,7 @@ Welcome to invest calc, an investment calculator straight to the point.
 
 This project was developed with the purpose of studying the following technologies:
 1. React + Typescript: Development framework.
-2. Axios: To make external calls to APIs. In this project I used the cryptocurrency API [cryptocompare] (https://min-api.cryptocompare.com/)
+2. Axios: To make external calls to APIs. In this project I used the cryptocurrency API [cryptocompare](https://min-api.cryptocompare.com/).
 3. react-google-charts: Used for rendering interactive charts.
 4. React Bootstrap: Framework for developing front-end components in their version for react.
 
