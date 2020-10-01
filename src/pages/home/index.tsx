@@ -55,7 +55,7 @@ const Home: React.FC = () => {
   const [investValue, setInvestValue] = useState(0);
 
   const [formattedChartData, setFormattedChartData] = useState<State>(() => {
-    const interData: State = { data: [['Data', 'investimento'], [new Date(), 0],] };
+    const interData: State = { data: [['Date', 'investment'], [new Date(), 0],] };
     return interData;
   });
 
@@ -71,9 +71,9 @@ const Home: React.FC = () => {
           flag = false;
           addToast({
             type: 'error',
-            title: 'Erro de preenchimento do formulário',
+            title: 'Error filling the formulary',
             description:
-              'Escolha uma data passada para a simulação',
+              'Choose a past date to simulate the investment',
           });
         }
 
@@ -81,9 +81,9 @@ const Home: React.FC = () => {
           flag = false;
           addToast({
             type: 'error',
-            title: 'Erro de preenchimento do formulário',
+            title: 'Error filling the formulary',
             description:
-              'Preencha o valor investido apenas com números',
+              'Fill the amount invested with numbers',
           });
         }
 
@@ -110,7 +110,7 @@ const Home: React.FC = () => {
               return chartData_;
             });
 
-            const axes = ['data', 'Tesouro direto'];
+            const axes = ['date', 'Treasure'];
 
             formattedTreasureData = { data: [axes, ...chartDataTreasure] };
 
@@ -129,7 +129,7 @@ const Home: React.FC = () => {
             const response = await api.get('/data/v2/histoday', {
               params: {
                 fsym: 'BTC',
-                tsym: 'BRL',
+                tsym: 'USD',
                 limit,
                 aggregate,
                 e: 'CCCAGG',
@@ -165,7 +165,7 @@ const Home: React.FC = () => {
               return chartData_;
             });
 
-            const axes = ['data', 'bitcoin'];
+            const axes = ['date', 'bitcoin'];
 
             formattedCryptoData = { data: [axes, ...cryptoData] };
 
@@ -197,9 +197,9 @@ const Home: React.FC = () => {
       } catch (err) {
         addToast({
           type: 'error',
-          title: 'Erro no servidor',
+          title: 'Server error',
           description:
-            'Ocorreu um erro ao tentar coletar a cotação',
+          'An error occurred while trying to get quotation'
         });
       }
     },
@@ -231,20 +231,20 @@ const Home: React.FC = () => {
         <Col md="4" className="text-center">
           <div className="form-content">
             <Form ref={formRef} onSubmit={handleCalculate}>
-              <h3 className="form-title">Calculadora de investimentos</h3>
+              <h3 className="form-title">Investment calculator</h3>
 
               <OverlayTrigger
                 placement={'top'}
                 overlay={
                   <Tooltip id={'tooltip-top'}>
-                    Marque o tipo de investimento.
+                    Check the type of investment
                     </Tooltip>
                 }
               >
                 <ToggleButtonGroup type="checkbox" value={investType} onChange={type => handleUpdateInvestType(type)}>
 
                   <ToggleButton value={0}>Bitcoin</ToggleButton>
-                  <ToggleButton value={1}>Tesouro direto</ToggleButton>
+                  <ToggleButton value={1}>Treasure</ToggleButton>
                 </ToggleButtonGroup>
               </OverlayTrigger>
 
@@ -252,13 +252,13 @@ const Home: React.FC = () => {
                 placement={'top'}
                 overlay={
                   <Tooltip id={'tooltip-top'}>
-                    Data de realização do investimento.
+                    Investment date.
                   </Tooltip>
                 }
               >
                 <div className="input-group mb-3 ">
                   <div className="input-group-prepend">
-                    <span className="input-group-text">Data: </span>
+                    <span className="input-group-text">Date: </span>
                   </div>
                   <DayPickerInput
                     inputProps={{ className: 'input-group form-control' }}
@@ -271,19 +271,19 @@ const Home: React.FC = () => {
                 placement={'top'}
                 overlay={
                   <Tooltip id={'tooltip-top'}>
-                    Valor investido em reais.
+                    Amount invested in us dollars.
                   </Tooltip>
                 }
               >
                 <InputGroup className="mb-3 ">
                   <InputGroup.Prepend>
-                    <InputGroup.Text id="basic-addon1">R$</InputGroup.Text>
+                    <InputGroup.Text id="basic-addon1">$</InputGroup.Text>
                   </InputGroup.Prepend>
 
                   <FormControl
                     type="number"
-                    aria-label="Valor investido"
-                    placeholder="Valor investido"
+                    aria-label="Amount invested"
+                    placeholder="Amount invested"
                     onChange={(value) => handleUpdateInvestValue(Number(value.target.value))}
                   />
 
@@ -294,7 +294,7 @@ const Home: React.FC = () => {
               </OverlayTrigger>
 
               <Button type="submit" block>
-                Calcular
+                Calculate
             </Button>
             </Form>
           </div>
