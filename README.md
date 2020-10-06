@@ -1,6 +1,6 @@
 Access the application [Invest Calc](https://invest-calc.netlify.app/).
 
-![Screenshot](screenshot.png)
+![Screenshot](invest-calc.gif)
 
 ## INVEST CALC
 
